@@ -30,13 +30,17 @@ def readDataFromHtmlTable(htmlTable):
 			]
 
 def writeToFile(listOfDicts, fileName):
-	pd.DataFrame(listOfDicts).to_json(path_or_buf=fileName + '.jsonl', orient='records', lines=True)
+	pd.DataFrame(listOfDicts).to_json(path_or_buf='./out/' + fileName + '.jsonl', orient='records', lines=True)
 
 def main():
-	states = [os.environ.get('STATE1', 'SP'), os.environ.get('STATE2', 'RJ')]
+	states = [os.environ.get('STATE1', 'SC'), os.environ.get('STATE2', 'MG')]
+	os.makedirs('out')
+	
 	for state in states:
 		if state not in allowedStates:
+			print('No state named', state)
 			raise ValueError("Invalid state acronym providaded")
+		print('Collecting data for', state)
 		writeToFile(
 			listOfDicts=readDataFromHtmlTable(
 				getDataFromUrl(
