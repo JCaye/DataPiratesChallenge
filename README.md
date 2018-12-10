@@ -1,5 +1,4 @@
-[![CircleCI](https://circleci.com/gh/JCaye/DataPiratesChallenge/tree/master.svg?style=svg)](https://circleci.com/gh/JCaye/DataPiratesChallenge/tree/master)
-
+[![CircleCI](https://circleci.com/gh/JCaye/DataPiratesChallenge/tree/master.svg?style=svg)](https://circleci.com/gh/JCaye/DataPiratesChallenge/tree/master) [![codecov](https://codecov.io/gh/JCaye/DataPiratesChallenge/branch/master/graph/badge.svg)](https://codecov.io/gh/JCaye/DataPiratesChallenge)
 # DataPiratesChallenge
 Solution to the Data Pirates Challenge
 
