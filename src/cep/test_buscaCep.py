@@ -7,3 +7,8 @@ def test_buildFormData_whenValidArgs_thenSuccess():
 									'UF': 'SC',
 									'qtdrow': 50
 									}
+def test_buildFormData_whenNoLenght_theUseDefault():
+	assert BuildFormData('DF') == {
+									'UF': 'DF',
+									'qtdrow': 100
+									}
