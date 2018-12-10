@@ -10,9 +10,11 @@ allowedStates = ['AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO',
 			'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']
 
 def buildFormData(uf, qtdrow = 100):
+	assert uf in allowedStates
+	assert qtdrow >= 0
 	return {
 			'UF': uf,
-			'qtdrow': qtdrow
+			'qtdrow': qtdrow + 1
 			}
 
 def getDataFromUrl(url='http://www.buscacep.correios.com.br/sistemas/buscacep/ResultadoBuscaFaixaCEP.cfm', formData={}):
@@ -21,13 +23,13 @@ def getDataFromUrl(url='http://www.buscacep.correios.com.br/sistemas/buscacep/Re
 		raise RuntimeError('Request was not successful')
 	return BeautifulSoup(r.content.decode('ISO-8859-1'), 'html.parser').findAll('table')[1]
 
-def readDataFromHtmlTable(htmlTable):
+def readDataFromHtmlTable(htmlTable, qtdrow = 100):
 	return [
 			{
 			'Localidade': table_row.findAll('td')[0].get_text(),
 			'Faixa de CEP': table_row.findAll('td')[1].get_text()
 			} 
-			for table_row in htmlTable.findAll('tr')[2:]
+			for table_row in htmlTable.findAll('tr')[2:2+qtdrow]
 			]
 
 def writeToFile(listOfDicts, fileName):
@@ -40,10 +42,10 @@ def main(state1='SP', state2='RJ'):
 		os.makedirs('out')
 	
 	for state in [state1, state2]:
+		print('Collecting data for', state)
 		if state not in allowedStates:
 			print('No state named', state)
-			raise ValueError("Invalid state acronym provided")
-		print('Collecting data for', state)
+			raise ValueError('No state named %s' % state)
 		writeToFile(
 			listOfDicts=readDataFromHtmlTable(
 				getDataFromUrl(

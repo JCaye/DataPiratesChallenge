@@ -1,14 +1,41 @@
 import pytest
 
-from buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile
+from buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, main
 
 def test_buildFormData_whenValidArgs_thenSuccess():
 	assert buildFormData('SC', 50) == {
 									'UF': 'SC',
-									'qtdrow': 50
+									'qtdrow': 51
 									}
-def test_buildFormData_whenNoLenght_theUseDefault():
+def test_buildFormData_whenNoLenght_thenUseDefault():
 	assert buildFormData('DF') == {
 									'UF': 'DF',
-									'qtdrow': 100
+									'qtdrow': 101
 									}
+
+def test_buildFormData_whenInvalidState_thenFail():
+	with pytest.raises(AssertionError) as e_info:
+		buildFormData('invalidState')
+
+def test_buildFormData_whenInvalidRows_thenFail():
+	with pytest.raises(AssertionError) as e_info:
+		buildFormData('SC', -12)
+
+def test_getDataFromUrl_whenValidFormData_thenSuccess():
+	try:
+		getDataFromUrl(formData = buildFormData('SP', 100))
+	except:
+		assert False
+
+def test_readDataFromHtmlTable_whenValidTable_thenSuccess():
+	assert 40 == len(
+				readDataFromHtmlTable(
+					getDataFromUrl(
+						formData=buildFormData('SP')
+					),
+					qtdrow=40
+				)
+			)
+def test_main_whenInvalidState_thenValueError():
+	with pytest.raises(ValueError) as e_info:
+		main('invalid_state', 'SP')
