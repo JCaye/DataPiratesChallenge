@@ -57,6 +57,10 @@ jobs:
       - run:
           name: post-test
           command: codecov -t 3f8f8af6-f1d8-4807-ba99-6d18ae114bc6
+      
+      - run:
+          name: upload report to codecov
+          command: bash < (curl -s https://codecov.io/bash)
 
       - store_artifacts:
           path: test-reports
