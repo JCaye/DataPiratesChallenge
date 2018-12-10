@@ -46,7 +46,7 @@ jobs:
       # https://nose.readthedocs.io
       - run:
           name: pre-dependencies
-          command: sudo pip install --user codecov
+          command: sudo pip install codecov
           when: always
 
       - run:
