@@ -56,5 +56,5 @@ jobs:
       
       - run:
           name: Upload test report
-          command: pip install codecov && codecov
+          command: codecov
           when: always
