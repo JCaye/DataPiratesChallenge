@@ -53,7 +53,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            py.test ./src/cep/buscaCepTests.py
+            python -m pytest ./src/cep/buscaCepTests.py
       - run:
           name: post-test
           command: codecov -t 3f8f8af6-f1d8-4807-ba99-6d18ae114bc6
