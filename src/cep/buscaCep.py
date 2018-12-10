@@ -28,7 +28,7 @@ def readDataFromHtmlTable(htmlTable, qtdrow = 100):
 			{
 			'Localidade': table_row.findAll('td')[0].get_text(),
 			'Faixa de CEP': table_row.findAll('td')[1].get_text()
-			} 
+			}
 			for table_row in htmlTable.findAll('tr')[2:2+qtdrow]
 			]
 
@@ -57,7 +57,4 @@ def main(state1='SP', state2='RJ'):
 		)
 
 if __name__ == '__main__':
-	if len(sys.argv) != 3:
-		print('Usage: python ./src/cep/buscaCep.py STATE1 STATE2')
-	else:
-		main(sys.argv[1], sys.argv[2])
+	main()
