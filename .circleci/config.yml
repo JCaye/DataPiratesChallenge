@@ -45,16 +45,20 @@ jobs:
       # https://pytest.org
       # https://nose.readthedocs.io
       - run:
+          name: pre-dependencies
+          command: sudo pip install --user codecov
+          when: always
+
+      - run:
           name: run tests
           command: |
             . venv/bin/activate
             python ./src/test/buscarCepTests.py test
+      - run:
+          name: post-test
+          command: codecov
 
       - store_artifacts:
           path: test-reports
           destination: test-reports
       
-      - run:
-          name: Upload test report
-          command: sudo pip install --user codecov && codecov
-          when: always
