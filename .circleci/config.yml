@@ -56,7 +56,7 @@ jobs:
             python ./src/test/buscarCepTests.py test
       - run:
           name: post-test
-          command: codecov
+          command: codecov -t 3f8f8af6-f1d8-4807-ba99-6d18ae114bc6
 
       - store_artifacts:
           path: test-reports
