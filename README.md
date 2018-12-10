@@ -9,10 +9,7 @@ Well, why not?
 
 # How to use it?
 Clone the repo and set up your python vituralenv with `virtualenv venv -p python` (make sure to run python 3.7). Once there, activate the venv with `./venv/scripts/activate.bat` and install the requirements with `pip install -r requirements.txt`.
-Finally, with everything setup, run `python ./src/cep/buscarCep.py`. The script will collect information on two default states, and save it to `out/` folder, as `.jsonl` files.
-
-# Querying non-default states
-To collect data for other states than the default ones, set environment variables called `STATE1` and/or `STATE2` to the two letter acronym for the state of interest, and run the application again.
+Finally, with everything setup, run `python ./src/cep/buscarCep.py STATE1 STATE2`. The script will collect information on the two specified states (use only their acronyms), and save it to `out/` folder as `.jsonl` files.
 
 # Output files
 The files are written as `jsonlines`, each line corresponding to one range of postal codes. Each element has two attributes: location (`localidade`) and the range of postal code (`faixa de CEP`).

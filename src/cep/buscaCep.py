@@ -1,6 +1,7 @@
 import os
+import sys
+import json
 import requests
-import pandas as pd
 
 from bs4 import BeautifulSoup
 
@@ -18,7 +19,7 @@ def getDataFromUrl(url='http://www.buscacep.correios.com.br/sistemas/buscacep/Re
 	r = requests.post(url, data=formData)
 	if r.status_code != 200:
 		raise RuntimeError('Request was not successful')
-	return BeautifulSoup(r.content, 'html.parser').findAll('table')[1]
+	return BeautifulSoup(r.content.decode('ISO-8859-1'), 'html.parser').findAll('table')[1]
 
 def readDataFromHtmlTable(htmlTable):
 	return [
@@ -30,16 +31,18 @@ def readDataFromHtmlTable(htmlTable):
 			]
 
 def writeToFile(listOfDicts, fileName):
-	pd.DataFrame(listOfDicts).to_json(path_or_buf='./out/' + fileName + '.jsonl', orient='records', lines=True)
+	with open('./out/{}.jsonl'.format(fileName), 'w+') as output:
+		for line in listOfDicts:
+			output.write(json.dumps(line) + '\n')
 
-def main():
-	states = [os.environ.get('STATE1', 'SC'), os.environ.get('STATE2', 'MG')]
-	os.makedirs('out')
+def main(state1='SP', state2='RJ'):
+	if not os.path.exists('out'):
+		os.makedirs('out')
 	
-	for state in states:
+	for state in [state1, state2]:
 		if state not in allowedStates:
 			print('No state named', state)
-			raise ValueError("Invalid state acronym providaded")
+			raise ValueError("Invalid state acronym provided")
 		print('Collecting data for', state)
 		writeToFile(
 			listOfDicts=readDataFromHtmlTable(
@@ -52,4 +55,7 @@ def main():
 		)
 
 if __name__ == '__main__':
-	main()
+	if len(sys.argv) != 3:
+		print('Usage: python ./src/cep/buscaCep.py STATE1 STATE2')
+	else:
+		main(sys.argv[1], sys.argv[2])
