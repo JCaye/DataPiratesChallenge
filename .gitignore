@@ -1,6 +1,6 @@
 __pycache__/
 venv/
 out/
-test-reports/s
+test-reports/
 
 *.jsonl
