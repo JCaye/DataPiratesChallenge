@@ -5,4 +5,6 @@ ADD requirements.txt /root/requirements.txt
 
 RUN pip install -r /root/requirements.txt
 
-CMD ["python", "/root/buscaCep.py"]
+WORKDIR /root
+
+CMD ["python", "buscaCep.py"]
