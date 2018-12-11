@@ -28,7 +28,7 @@ def readDataFromHtmlTable(htmlTable, qtdrow = 100):
 			{
 			'Localidade': table_row.findAll('td')[0].get_text(),
 			'Faixa de CEP': table_row.findAll('td')[1].get_text()
-			} 
+			}
 			for table_row in htmlTable.findAll('tr')[2:2+qtdrow]
 			]
 
@@ -37,15 +37,15 @@ def writeToFile(listOfDicts, fileName):
 		for line in listOfDicts:
 			output.write(json.dumps(line) + '\n')
 
-def main(state1='SP', state2='RJ'):
+def getPostalCodeInfo(states):
 	if not os.path.exists('out'):
 		os.makedirs('out')
 	
-	for state in [state1, state2]:
+	for state in states:
 		print('Collecting data for', state)
 		if state not in allowedStates:
 			print('No state named', state)
-			raise ValueError('No state named %s' % state)
+			continue
 		writeToFile(
 			listOfDicts=readDataFromHtmlTable(
 				getDataFromUrl(
@@ -55,9 +55,15 @@ def main(state1='SP', state2='RJ'):
 			),
 			fileName=state
 		)
+			
+def main(states):
+	getPostalCodeInfo(states)
 
 if __name__ == '__main__':
-	if len(sys.argv) != 3:
-		print('Usage: python ./src/cep/buscaCep.py STATE1 STATE2')
-	else:
-		main(sys.argv[1], sys.argv[2])
+	if not (len(sys.argv[1:]) > 0):
+		print('Usage: buscaCep.py STATE1 STATE2 STATE3 ...')
+		quit(code=1)
+	if len(set(sys.argv[1:]) - set(allowedStates)) != 0:
+		print("These are not valid states", set(sys.argv[1:]) - set(allowedStates))
+		quit(code=2)
+	main(sys.argv[1:])

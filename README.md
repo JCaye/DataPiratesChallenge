@@ -9,8 +9,7 @@ This application retrieves postal code ranges ("faixa de CEP") for up to 100 loc
 Well, why not?
 
 # How to use it?
-Clone the repo and set up your python vituralenv with `virtualenv venv -p python` (make sure to run python 3.7). Once there, activate the venv with `./venv/scripts/activate.bat` and install the requirements with `pip install -r requirements.txt`.
-Finally, with everything setup, run `python ./src/cep/buscarCep.py STATE1 STATE2`. The script will collect information on the two specified states (use only their acronyms), and save it to `out/` folder as `.jsonl` files.
+Clone the repo and run `make build run STATE1 STATE2 STATE3 ...`. STATES are optional variables which map to specific brazilian states. If no STATE is provided, or if an invalid state is provided, the application will exit without running.
 
 # Output files
-The files are written as `jsonlines`, each line corresponding to one range of postal codes. Each element has two attributes: location (`localidade`) and the range of postal code (`faixa de CEP`).
+The files are written as `jsonlines` to `out` folder, each line corresponding to one range of postal codes. Each element has two attributes: location (`localidade`) and the range of postal code (`faixa de CEP`).
