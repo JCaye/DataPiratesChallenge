@@ -13,7 +13,11 @@ def test_buildFormData_whenNoLenght_thenUseDefault():
 									'qtdrow': 101
 									}
 
-def test_buildFormData_whenInvalidState_thenFail():
+def test_buildFormData_whenNonPositivoRows_thenAssertionError():
+	with pytest.raises(AssertionError) as e_info:
+		buildFormData('SC', -2)
+
+def test_buildFormData_whenInvalidState_thenAssertionError():
 	with pytest.raises(AssertionError) as e_info:
 		buildFormData('invalidState')
 
