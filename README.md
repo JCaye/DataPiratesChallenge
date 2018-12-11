@@ -9,7 +9,9 @@ This application retrieves postal code ranges ("faixa de CEP") for up to 100 loc
 Well, why not?
 
 # How to use it?
-Clone the repo and run `make build run STATE1 STATE2 STATE3 ...`. STATES are optional variables which map to specific brazilian states (uppercase 2-letter inputs are valid). If no STATE is provided, the default values will be `SP` and `RJ`. If an invalid state is provided, the application will exit without running.
+Clone the repo and run `make build run STATE1 STATE2 STATE3 ...` from the `DataPiratesChallengeDirectory`. STATES are optional variables which map to specific brazilian states (uppercase 2-letter inputs are valid). If no STATE is provided, the default values will be `SP` and `RJ`. If an invalid state is provided, the application will exit without running.
+
+Alternatively, in the abscence of either docker or make, you can spin up your own virtualenv with `virtualenv venv -p python`(make sure to use python 3.7), install the required dependencies with `pip install -r requirements.txt` and run the app with `python -m ./src/cep/buscaCep.py`.
 
 # Output files
 The files are written as `jsonlines` to `out` folder, each line corresponding to one range of postal codes. Each element has two attributes: location (`localidade`) and the range of postal code (`faixa de CEP`).
