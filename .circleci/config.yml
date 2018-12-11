@@ -28,9 +28,11 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: build docker image
+          name: install dependencies
           command: |
-            make build
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
 
       - save_cache:
           paths:
@@ -50,12 +52,21 @@ jobs:
       - run:
           name: run tests
           command: |
-            make test
-            
+            . venv/bin/activate
+            mkdir test-reports
+            python -m pytest --junitxml=test-reports/junit.xml
+      
+      - store_test_results:
+        path: test-reports
+        
       - store_artifacts:
           path: test-reports
           destination: test-reports
-          
+
+      - run:
+          name: post-test
+          command: codecov -t 3f8f8af6-f1d8-4807-ba99-6d18ae114bc6
+      
       - run:
           name: upload report to codecov
           command: bash <(curl -s https://codecov.io/bash)
