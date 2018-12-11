@@ -2,5 +2,6 @@ __pycache__/
 venv/
 out/
 test-reports/
+coverage.xml
 
 *.jsonl

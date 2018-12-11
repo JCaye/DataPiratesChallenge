@@ -1,6 +1,6 @@
 import pytest
 
-from buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo
+from src.cep.buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo
 
 def test_buildFormData_whenValidArgs_thenSuccess():
 	assert buildFormData('SC', 50) == {
@@ -13,7 +13,11 @@ def test_buildFormData_whenNoLenght_thenUseDefault():
 									'qtdrow': 101
 									}
 
-def test_buildFormData_whenInvalidState_thenFail():
+def test_buildFormData_whenNonPositivoRows_thenAssertionError():
+	with pytest.raises(AssertionError) as e_info:
+		buildFormData('SC', -2)
+
+def test_buildFormData_whenInvalidState_thenAssertionError():
 	with pytest.raises(AssertionError) as e_info:
 		buildFormData('invalidState')
 
