@@ -1,6 +1,6 @@
 import pytest
 
-from buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, main
+from buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo
 
 def test_buildFormData_whenValidArgs_thenSuccess():
 	assert buildFormData('SC', 50) == {
@@ -36,6 +36,3 @@ def test_readDataFromHtmlTable_whenValidTable_thenSuccess():
 					qtdrow=40
 				)
 			)
-def test_main_whenInvalidState_thenValueError():
-	with pytest.raises(ValueError) as e_info:
-		main('invalid_state', 'SP')
