@@ -1,6 +1,6 @@
 import pytest
 
-from buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo
+from src.cep.buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo
 
 def test_buildFormData_whenValidArgs_thenSuccess():
 	assert buildFormData('SC', 50) == {
