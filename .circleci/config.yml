@@ -54,21 +54,8 @@ jobs:
           command: |
             . venv/bin/activate
             mkdir test-reports
-            python -m pytest --cov
-      
-      - store_test_results:
-          path: test-reports
-        
-      - store_artifacts:
-          path: test-reports
-          destination: test-reports
+            python -m pytest --cov=src
 
       - run:
           name: codecov bash
-          command: bash <(curl -s https://codecov.io/bash)
-          
-      - run:
-          name: codecov reports
-          command: python -m codecov -t 3f8f8af6-f1d8-4807-ba99-6d18ae114bc6
-
-      
+          command: bash <(curl -s https://codecov.io/bash)     
