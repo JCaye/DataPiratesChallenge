@@ -21,7 +21,7 @@ def getDataFromUrl(url='http://www.buscacep.correios.com.br/sistemas/buscacep/Re
 	r = requests.post(url, data=formData)
 	if r.status_code != 200:
 		raise RuntimeError('Request was not successful')
-	return BeautifulSoup(r.content.decode('ISO-8859-1'), 'html.parser').findAll('table')[1]
+	return BeautifulSoup(r.content, 'html.parser').findAll('table')[1]
 
 def readDataFromHtmlTable(htmlTable, qtdrow = 100):
 	return [
