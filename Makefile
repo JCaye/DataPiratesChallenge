@@ -12,4 +12,4 @@ test:
 
 run: 
 	docker run --rm -v `pwd`/out:/root/out $(IMAGE) \
-	python buscacep.py $(STATES)
+	python buscaCep.py $(STATES)
