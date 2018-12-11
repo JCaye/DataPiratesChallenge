@@ -3,5 +3,5 @@ venv/
 out/
 test-reports/
 coverage.xml
-
+.coverage
 *.jsonl
