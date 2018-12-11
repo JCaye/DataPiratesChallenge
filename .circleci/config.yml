@@ -64,6 +64,10 @@ jobs:
           destination: test-reports
 
       - run:
+          name: codecov bash
+          command: bash <(curl -s https://codecov.io/bash)
+          
+      - run:
           name: codecov reports
           command: python -m codecov -t 3f8f8af6-f1d8-4807-ba99-6d18ae114bc6
 
