@@ -1,7 +1,13 @@
 import pytest
 import os
 
-from src.cep.buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo
+from src.cep.buscaCep import getAllowedStates, buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo, main
+
+def test_getAllowedStates():
+	allowedStates = set(['AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO',
+			'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI',
+			'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'])
+	assert allowedStates == getAllowedStates()
 
 def test_buildFormData_whenValidArgs_thenSuccess():
 	assert buildFormData('SC', 50) == {
@@ -17,10 +23,6 @@ def test_buildFormData_whenNoLenght_thenUseDefault():
 def test_buildFormData_whenNonPositivoRows_thenAssertionError():
 	with pytest.raises(AssertionError) as e_info:
 		buildFormData('SC', -2)
-
-def test_buildFormData_whenInvalidState_thenAssertionError():
-	with pytest.raises(AssertionError) as e_info:
-		buildFormData('invalidState')
 
 def test_buildFormData_whenInvalidRows_thenFail():
 	with pytest.raises(AssertionError) as e_info:
@@ -48,7 +50,13 @@ def test_writeToFile_whenValid_thenSuccess(tmp_path):
 	assert (tmp_path / 'testFile.jsonl').read_text() == '{"test": "content"}' + '\n'
 
 def test_getPostalCodeInfo_whenValid_thenSuccess():
-	getPostalCodeInfo(['invalid state', 'AC', 'SC', 'another invalid state'])
+	getPostalCodeInfo(['AC', 'SC'])
 	assert os.path.exists('out/AC.jsonl')
 	assert os.path.exists('out/SC.jsonl')
 	assert len([name for name in os.listdir('./out') if os.path.isfile(os.path.join('./out', name))]) == 2
+
+def test_main():
+	main(['PR', 'RS'])
+	assert os.path.exists('out/PR.jsonl')
+	assert os.path.exists('out/RS.jsonl')
+	assert len([name for name in os.listdir('./out') if os.path.isfile(os.path.join('./out', name))]) == 4
