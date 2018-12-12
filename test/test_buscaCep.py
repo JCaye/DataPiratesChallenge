@@ -1,7 +1,7 @@
 import pytest
 import os
 
-from src.cep.buscaCep import getAllowedStates, buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo
+from src.cep.buscaCep import getAllowedStates, buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo, main
 
 def test_getAllowedStates():
 	allowedStates = set(['AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO',
@@ -54,3 +54,9 @@ def test_getPostalCodeInfo_whenValid_thenSuccess():
 	assert os.path.exists('out/AC.jsonl')
 	assert os.path.exists('out/SC.jsonl')
 	assert len([name for name in os.listdir('./out') if os.path.isfile(os.path.join('./out', name))]) == 2
+
+def test_main():
+	getPostalCodeInfo(['PR', 'RS'])
+	assert os.path.exists('out/PR.jsonl')
+	assert os.path.exists('out/RS.jsonl')
+	assert len([name for name in os.listdir('./out') if os.path.isfile(os.path.join('./out', name))]) == 4
