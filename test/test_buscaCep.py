@@ -1,4 +1,5 @@
 import pytest
+import os
 
 from src.cep.buscaCep import buildFormData, getDataFromUrl, readDataFromHtmlTable, writeToFile, getPostalCodeInfo
 
@@ -40,3 +41,14 @@ def test_readDataFromHtmlTable_whenValidTable_thenSuccess():
 					qtdrow=40
 				)
 			)
+
+def test_writeToFile_whenValid_thenSuccess(tmp_path):
+	writeToFile([{'test': 'content'}], 'test_writeToFile_whenValid_the0/testFile')
+	assert (tmp_path / 'testFile.jsonl').exists()
+	assert (tmp_path / 'testFile.jsonl').read_text() == '{"test": "content"}' + '\n'
+
+def test_getPostalCodeInfo_whenValid_thenSuccess():
+	getPostalCodeInfo(['invalid state', 'AC', 'SC', 'another invalid state'])
+	assert os.path.exists('out/AC.jsonl')
+	assert os.path.exists('out/SC.jsonl')
+	assert len([name for name in os.listdir('./out') if os.path.isfile(os.path.join('./out', name))]) == 2
