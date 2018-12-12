@@ -12,7 +12,7 @@ def getAllowedStates(url = 'http://www.buscacep.correios.com.br/sistemas/buscace
 		raise RuntimeError('Request was not successful')
 	
 	stateHtmlContainers = BeautifulSoup(r.content, 'html.parser').find('select').option.children
-	return set([state for state in stateHtmlContainers if state != " "])
+	return set([state.get_text() for state in stateHtmlContainers if state != " "])
 
 
 def buildFormData(uf, qtdrow = 100):
