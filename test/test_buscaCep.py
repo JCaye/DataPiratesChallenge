@@ -56,7 +56,7 @@ def test_getPostalCodeInfo_whenValid_thenSuccess():
 	assert len([name for name in os.listdir('./out') if os.path.isfile(os.path.join('./out', name))]) == 2
 
 def test_main():
-	getPostalCodeInfo(['PR', 'RS'])
+	main(['PR', 'RS'])
 	assert os.path.exists('out/PR.jsonl')
 	assert os.path.exists('out/RS.jsonl')
 	assert len([name for name in os.listdir('./out') if os.path.isfile(os.path.join('./out', name))]) == 4
