@@ -74,4 +74,4 @@ if __name__ == '__main__':
 	if len(set(sys.argv[1:]) - allowedStates) != 0:
 		print("These are not valid states", set(sys.argv[1:]) - allowedStates)
 		quit(code=2)
-	main(sys.argv[1:], allowedStates)
+	main(sys.argv[1:])
